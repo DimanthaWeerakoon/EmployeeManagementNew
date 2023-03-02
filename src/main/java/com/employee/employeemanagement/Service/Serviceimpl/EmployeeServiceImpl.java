@@ -41,5 +41,19 @@ import java.util.Optional;
                 new ResourceNotFoundException("Employee", "ID", id));
     }
 
+    @Override
+    public Employee updateEmployee(Employee employee, long id) {
+
+        //we need to check whether the employee with given ID is existing in DB or not
+        Employee existingEmployee = employeeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "ID", id));
+        existingEmployee.setFirstName(employee.getFirstName());
+        existingEmployee.setLastName(employee.getLastName());
+        existingEmployee.setEmail(employee.getEmail());
+        //Save existing employee to DB
+        employeeRepository.save(existingEmployee);
+        return existingEmployee;
+    }
+
 
 }
