@@ -55,5 +55,14 @@ import java.util.Optional;
         return existingEmployee;
     }
 
+    @Override
+    public void deleteEmployee(long id) {
+
+        //check whether an employee exist in a DB or not
+        employeeRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Employee", "ID", id));
+        employeeRepository.deleteById(id);
+    }
+
 
 }
